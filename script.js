@@ -8,18 +8,21 @@ document.addEventListener('DOMContentLoaded', function () {
   var navToggle = document.getElementById('navToggle');
   var mainNav = document.getElementById('mainNav');
 
+  function setNavOpen(isOpen) {
+    mainNav.classList.toggle('open', isOpen);
+    navToggle.classList.toggle('open', isOpen);
+    navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    document.body.classList.toggle('nav-lock', isOpen);
+  }
+
   if (navToggle && mainNav) {
     navToggle.addEventListener('click', function () {
-      var isOpen = mainNav.classList.toggle('open');
-      navToggle.classList.toggle('open', isOpen);
-      navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      setNavOpen(!mainNav.classList.contains('open'));
     });
 
     mainNav.querySelectorAll('a').forEach(function (link) {
       link.addEventListener('click', function () {
-        mainNav.classList.remove('open');
-        navToggle.classList.remove('open');
-        navToggle.setAttribute('aria-expanded', 'false');
+        setNavOpen(false);
       });
     });
   }

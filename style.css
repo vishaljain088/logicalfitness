@@ -51,6 +51,8 @@ ul{list-style:none; margin:0; padding:0;}
 button{font-family:inherit; cursor:pointer;}
 input,select,textarea{font-family:inherit;}
 
+body.nav-lock{overflow:hidden;}
+
 .container{
   width:100%;
   max-width:var(--container);
@@ -140,9 +142,15 @@ input,select,textarea{font-family:inherit;}
 .site-header{
   position:sticky; top:0; z-index:500;
   background:rgba(10,10,11,.85);
-  backdrop-filter:blur(10px);
   border-bottom:1px solid var(--line);
   transition:background var(--transition);
+}
+.site-header::before{
+  content:'';
+  position:absolute; inset:0;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  z-index:-1;
 }
 .header-inner{
   display:flex; align-items:center; justify-content:space-between;
@@ -163,7 +171,7 @@ input,select,textarea{font-family:inherit;}
 }
 .logo-text em{color:var(--gold); font-style:normal;}
 
-.main-nav ul{display:flex; gap:30px;}
+.main-nav ul{display:flex; gap:22px;}
 .main-nav a{
   font-family:var(--font-mono);
   font-size:.78rem;
@@ -185,23 +193,22 @@ input,select,textarea{font-family:inherit;}
 
 .nav-toggle{
   display:none; flex-direction:column; gap:5px;
-  background:none; border:none; padding:8px;
+  background:none; border:none; padding:14px 10px;
 }
 .nav-toggle span{width:24px; height:2px; background:var(--white); transition:var(--transition);}
 .nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
 .nav-toggle.open span:nth-child(2){opacity:0;}
 .nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
 
-@media(max-width:960px){
-  .header-cta .btn-ghost{display:none;}
-}
-@media(max-width:860px){
+@media(max-width:1150px){
   .main-nav{
-    position:fixed; inset:76px 0 0 0;
+    position:fixed;
+    top:76px; right:0; bottom:0; left:0;
     background:var(--black);
     transform:translateX(100%);
     transition:transform var(--transition);
     padding:32px 24px; overflow-y:auto;
+    z-index:499;
   }
   .main-nav.open{transform:translateX(0);}
   .main-nav ul{flex-direction:column; gap:0;}
